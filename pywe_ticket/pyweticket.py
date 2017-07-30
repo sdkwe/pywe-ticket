@@ -22,7 +22,7 @@ class Ticket(BaseWechat):
 
     @property
     def ticket_info_key(self):
-        return '{}:{}:ticket:info'.format(self.appid, self.type)
+        return '{0}:{1}:ticket:info'.format(self.appid, self.type)
 
     def __about_to_expires(self, expires_at):
         return expires_at and expires_at - int(time.time()) < 60
