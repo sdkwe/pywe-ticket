@@ -2,23 +2,17 @@
 
 import time
 
-from pywe_base import BaseWechat
 from pywe_exception import WeChatException
-from pywe_storage import MemoryStorage
-from pywe_token import access_token
+from pywe_token import final_access_token
+
+from .baseticket import BaseTicket
 
 
-class Ticket(BaseWechat):
-    def __init__(self, appid=None, secret=None, type='jsapi', storage=None):
+class Ticket(BaseTicket):
+    def __init__(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
+        super(Ticket, self).__init__(appid=appid, secret=secret, token=token, type=type, storage=storage)
         # 微信JS-SDK说明文档, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
-        super(Ticket, self).__init__()
         self.WECHAT_TICKET = self.API_DOMAIN + '/cgi-bin/ticket/getticket?access_token={access_token}&type={type}'
-        self.appid = appid
-        self.secret = secret
-        self.storage = storage or MemoryStorage()
-        self.type = type
-        self.tickets = {}
-        self.expires_at = None
 
     @property
     def ticket_info_key(self):
@@ -28,26 +22,23 @@ class Ticket(BaseWechat):
         return expires_at and expires_at - int(time.time()) < 60
 
     def __fetch_ticket(self, appid=None, secret=None, token=None, type=None, storage=None):
-        storage = storage or self.storage
-        ticket_info = self.get(self.WECHAT_TICKET, access_token=token or access_token(appid or self.appid, secret or self.secret, storage=storage), type=type)
+        # Update Params
+        self.update_params(appid=appid, secret=secret, token=token, type=type, storage=storage)
+        # Ticket Info Request
+        ticket_info = self.get(self.WECHAT_TICKET, access_token=final_access_token(self, appid=self.appid, secret=self.secret, token=self.token, storage=self.storage), type=self.type)
+        # Request Error
         if 'expires_in' not in ticket_info:
             raise WeChatException(ticket_info)
-        self.tickets[type] = ticket_info.get('ticket')
+        # Set Ticket Info into Storage
         expires_in = ticket_info.get('expires_in')
-        self.expires_at = int(time.time()) + expires_in
-        if storage:
-            ticket_info['expires_at'] = self.expires_at
-            storage.set(self.ticket_info_key, ticket_info, expires_in)
-        return self.tickets.get(type, '')
+        ticket_info['expires_at'] = int(time.time()) + expires_in
+        self.storage.set(self.ticket_info_key, ticket_info, expires_in)
+        # Return Ticket
+        return ticket_info.get('ticket')
 
     def ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
-        if self.tickets.get(type, '') and not self.__about_to_expires(self.expires_at):
-            return self.tickets.get(type, '')
-        # Init appid/secret/storage/type
-        self.appid = appid or self.appid
-        self.secret = secret or self.secret
-        self.storage = storage or self.storage
-        self.type = type or self.type
+        # Update Params
+        self.update_params(appid=appid, secret=secret, token=token, type=type, storage=storage)
         # Fetch ticket_info
         ticket_info = self.storage.get(self.ticket_info_key)
         if ticket_info:
