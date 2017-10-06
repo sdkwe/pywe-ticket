@@ -20,7 +20,7 @@ setup(
 
     packages=['pywe_ticket'],
     py_modules=[],
-    install_requires=['pywe_base', 'pywe_exception', 'pywe_storage', 'pywe_token'],
+    install_requires=['pywe_base', 'pywe_exception', 'pywe_storage', 'pywe_token>=1.0.7'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",
