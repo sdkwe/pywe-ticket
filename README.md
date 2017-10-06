@@ -26,11 +26,11 @@ pip install pywe-ticket
     In [3]: ticket.ticket()
     Out[3]: u'sM4AOVdWfPE4DxkXGEs8VB_Ml7aLXlo2_KgFGduwNU6irBzC2ySEv3Ofex5q2eY1C50R-GffnrsRWFI7uDim9g'
 
-    In [4]: ticket.jsapi_ticket()
-    Out[4]: u'sM4AOVdWfPE4DxkXGEs8VB_Ml7aLXlo2_KgFGduwNU6irBzC2ySEv3Ofex5q2eY1C50R-GffnrsRWFI7uDim9g'
+    In [4]: ticket.api_ticket()
+    Out[4]: u'E0o2-at6NcC2OsJiQTlwlEaNeSfCJatHbnTsr44R0i4GASKTn-ZELWB3Oe7cpRbg5bLf4ZD5Ylg5cuOqma8LxA'
 
-    In [5]: ticket.api_ticket()
-    Out[5]: u'E0o2-at6NcC2OsJiQTlwlEaNeSfCJatHbnTsr44R0i4GASKTn-ZELWB3Oe7cpRbg5bLf4ZD5Ylg5cuOqma8LxA'
+    In [5]: ticket.jsapi_ticket()
+    Out[5]: u'sM4AOVdWfPE4DxkXGEs8VB_Ml7aLXlo2_KgFGduwNU6irBzC2ySEv3Ofex5q2eY1C50R-GffnrsRWFI7uDim9g'
     ```
 
   * ticket
