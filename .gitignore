@@ -20,3 +20,6 @@ build
 
 # Pytest cache
 /.cache/
+
+# Pytest config
+/tests/local_wecfg_example.py
