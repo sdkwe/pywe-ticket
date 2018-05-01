@@ -35,7 +35,7 @@ class Ticket(BaseTicket):
         self.storage.set(self.ticket_info_key, ticket_info, expires_in)
         # If ticket_fetched_func, Call it with `appid`, `secret`, `access_info`
         if ticket_fetched_func:
-            ticket_fetched_func(self.appid, self.secret, ticket_info)
+            ticket_fetched_func(self.appid, self.secret, self.type, ticket_info)
         # Return Ticket
         return ticket_info.get('ticket')
 
