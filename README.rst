@@ -101,13 +101,13 @@ Method
 ::
 
     class Ticket(BaseWechat):
-        def __init__(self, appid=None, secret=None, type='jsapi', storage=None):
+        def __init__(self, appid=None, secret=None, type='jsapi', storage=None, token_fetched_func=None):
 
-    def ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
+    def ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None, token_fetched_func=None):
 
-    def api_ticket(self, appid=None, secret=None, token=None, storage=None):
+    def api_ticket(self, appid=None, secret=None, token=None, storage=None, token_fetched_func=None):
 
-    def jsapi_ticket(self, appid=None, secret=None, token=None, storage=None):
+    def jsapi_ticket(self, appid=None, secret=None, token=None, storage=None, token_fetched_func=None):
 
-    def refresh_ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
+    def refresh_ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None, token_fetched_func=None):
 

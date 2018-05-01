@@ -2,8 +2,8 @@
 
 import redis_extensions as redis
 from pywe_storage import RedisStorage
-from pywe_ticket import ticket as com_ticket
 from pywe_ticket import Ticket, api_ticket, jsapi_ticket
+from pywe_ticket import ticket as com_ticket
 
 from local_wecfg_example import WECHAT
 
